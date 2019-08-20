@@ -54,8 +54,9 @@ class AreaEdicion extends Component {
       const newForm=detalleLLamada 
       //PESTAÑA INFO CLIENTE = detalleLLamada.components[0].components[0]
       newForm.components[0].components[0].components[0].columns[0].components[0].defaultValue=f.doc_nu_documento
-      newForm.components[0].components[0].components[0].columns[0].components[1].defaultValue=f.doc_nombre+" "+f.Ap_paterno+" "+f.doc_Ap_materno
-      newForm.components[0].components[0].components[0].columns[0].components[2].defaultValue=f.doc_nu_telefono
+      newForm.components[0].components[0].components[0].columns[0].components[1].defaultValue=f.doc_nombre
+      newForm.components[0].components[0].components[0].columns[0].components[2].defaultValue=f.Ap_paterno
+      newForm.components[0].components[0].components[0].columns[0].components[3].defaultValue=f.doc_nu_telefono
 
       newForm.components[0].components[0].components[0].columns[1].components[0].defaultValue=f.doc_nucotizacion
       newForm.components[0].components[0].components[0].columns[1].components[1].defaultValue=f.doc_version
@@ -271,17 +272,29 @@ class AreaEdicion extends Component {
  
 ocultarfomrulario() {
 
-
-    
-
     this.setState({expandida:false});
     
-  }
+}
 
 mostrarfomrulario() {
     
     this.setState({expandida:true});
+}
+
+actualizarGestionData(event){
+
+  const campos_nuevos= event.data
+
+  for (const i in campos_nuevos) {
+        //console.log(i)
+        //console.log(campos_nuevos[i])
+        this.props.formulario[0].datosFormulario[i]=campos_nuevos[i]
+
   }
+
+  console.log(event.data)
+  console.log(this.props.formulario[0].datosFormulario)
+}
  
 /*<div key={key} className="form-group">
           <label for={"exampleInputEmail1"+key}>{key}</label>
@@ -290,8 +303,7 @@ mostrarfomrulario() {
   render(){
 
     //const detalle = <Form form={this.state.detalleLLamada} onSubmit={this.actualizar} />
-    
-    
+     
 
 /*{formulario}*/
     if(this.state.expandida==true ){
@@ -302,7 +314,7 @@ mostrarfomrulario() {
 
               <div id="contenedorFormularios"  className='row contenedorFormularios'>
                 
-                {this.state.formulario=="detalleLLamada" && <Form form={this.state.detalleLLamada} onSubmit={this.actualizar} />}
+                {this.state.formulario=="detalleLLamada" && <Form form={this.state.detalleLLamada} onChange={(schema) => this.actualizarGestionData(schema)} onSubmit={this.actualizar} />}
                 {this.state.formulario=="seguimiento" && <Form form={seguimiento} onSubmit={this.enviargestion} />}
                 {this.state.formulario=="tipificacion" && <Form form={tipificacion} onSubmit={this.enviargestion} />}
 
@@ -419,7 +431,7 @@ const detalleLLamada={
                                             "id": "emz5gs"
                                         },
                                         {
-                                            "label": "Nombre y Apellido",
+                                            "label": "Nombre",
                                             "allowMultipleMasks": false,
                                             "showWordCount": false,
                                             "showCharCount": false,
@@ -427,7 +439,81 @@ const detalleLLamada={
                                             "alwaysEnabled": false,
                                             "type": "textfield",
                                             "input": true,
-                                            "key": "nombre",
+                                            "key": "doc_nombre",
+                                            "defaultValue": "",
+                                            "validate": {
+                                                "customMessage": "",
+                                                "json": "",
+                                                "required": false,
+                                                "custom": "",
+                                                "customPrivate": false,
+                                                "minLength": "",
+                                                "maxLength": "",
+                                                "minWords": "",
+                                                "maxWords": "",
+                                                "pattern": ""
+                                            },
+                                            "conditional": {
+                                                "show": "",
+                                                "when": "",
+                                                "json": "",
+                                                "eq": ""
+                                            },
+                                            "inputFormat": "plain",
+                                            "encrypted": false,
+                                            "properties": {},
+                                            "customConditional": "",
+                                            "logic": [],
+                                            "widget": {
+                                                "type": "",
+                                                "format": "yyyy-MM-dd hh:mm a",
+                                                "dateFormat": "yyyy-MM-dd hh:mm a",
+                                                "saveAs": "text"
+                                            },
+                                            "reorder": false,
+                                            "placeholder": "",
+                                            "prefix": "",
+                                            "customClass": "",
+                                            "suffix": "",
+                                            "multiple": false,
+                                            "protected": false,
+                                            "unique": false,
+                                            "persistent": true,
+                                            "hidden": false,
+                                            "clearOnHide": true,
+                                            "dataGridLabel": false,
+                                            "labelPosition": "top",
+                                            "labelWidth": 30,
+                                            "labelMargin": 3,
+                                            "description": "",
+                                            "errorLabel": "",
+                                            "tooltip": "",
+                                            "hideLabel": false,
+                                            "tabindex": "",
+                                            "disabled": false,
+                                            "autofocus": false,
+                                            "dbIndex": false,
+                                            "customDefaultValue": "",
+                                            "calculateValue": "",
+                                            "allowCalculateOverride": false,
+                                            "refreshOn": "",
+                                            "clearOnRefresh": false,
+                                            "validateOn": "change",
+                                            "mask": false,
+                                            "inputType": "text",
+                                            "inputMask": "",
+                                            "id": "eo0hfrl"
+                                        },
+                                        {
+                                            "label": "Apellido",
+                                            "allowMultipleMasks": false,
+                                            "showWordCount": false,
+                                            "showCharCount": false,
+                                            "tableView": true,
+                                            "alwaysEnabled": false,
+                                            "type": "textfield",
+                                            "input": true,
+                                            "key": "doc_Ap_paterno",
                                             "defaultValue": "",
                                             "validate": {
                                                 "customMessage": "",
@@ -501,7 +587,7 @@ const detalleLLamada={
                                             "alwaysEnabled": false,
                                             "type": "textfield",
                                             "input": true,
-                                            "key": "telefonoFijo",
+                                            "key": "doc_nu_telefono",
                                             "defaultValue": "",
                                             "validate": {
                                                 "customMessage": "",
@@ -630,7 +716,7 @@ const detalleLLamada={
                                             "alwaysEnabled": false,
                                             "type": "textfield",
                                             "input": true,
-                                            "key": "nCotizacionWeb",
+                                            "key": "doc_nucotizacion",
                                             "defaultValue": "",
                                             "validate": {
                                                 "customMessage": "",
@@ -704,7 +790,7 @@ const detalleLLamada={
                                             "alwaysEnabled": false,
                                             "type": "textfield",
                                             "input": true,
-                                            "key": "version",
+                                            "key": "doc_version",
                                             "defaultValue": "",
                                             "validate": {
                                                 "customMessage": "",
@@ -778,7 +864,7 @@ const detalleLLamada={
                                             "alwaysEnabled": false,
                                             "type": "textfield",
                                             "input": true,
-                                            "key": "puntoDeVenta",
+                                            "key": "doc_lugaratencion",
                                             "defaultValue": "",
                                             "validate": {
                                                 "customMessage": "",
@@ -967,7 +1053,7 @@ const detalleLLamada={
                                             "alwaysEnabled": false,
                                             "type": "textfield",
                                             "input": true,
-                                            "key": "email",
+                                            "key": "doc_no_correo",
                                             "defaultValue": "",
                                             "validate": {
                                                 "customMessage": "",
@@ -1096,7 +1182,7 @@ const detalleLLamada={
                                             "alwaysEnabled": false,
                                             "type": "textfield",
                                             "input": true,
-                                            "key": "comuna",
+                                            "key": "doc_Comuna",
                                             "defaultValue": "",
                                             "validate": {
                                                 "customMessage": "",
@@ -1235,7 +1321,7 @@ const detalleLLamada={
                                             "alwaysEnabled": false,
                                             "type": "textfield",
                                             "input": true,
-                                            "key": "direccion",
+                                            "key": "doc_no_direccion",
                                             "defaultValue": "",
                                             "validate": {
                                                 "customMessage": "",
@@ -1437,7 +1523,7 @@ const detalleLLamada={
                                                     "alwaysEnabled": false,
                                                     "type": "textfield",
                                                     "input": true,
-                                                    "key": "patente",
+                                                    "key": "doc_Retoma_patente",
                                                     "defaultValue": "",
                                                     "validate": {
                                                         "customMessage": "",
@@ -1511,7 +1597,7 @@ const detalleLLamada={
                                                     "alwaysEnabled": false,
                                                     "type": "textfield",
                                                     "input": true,
-                                                    "key": "version2",
+                                                    "key": "doc_Retoma_version",
                                                     "defaultValue": "",
                                                     "validate": {
                                                         "customMessage": "",
@@ -1640,7 +1726,7 @@ const detalleLLamada={
                                                     "alwaysEnabled": false,
                                                     "type": "textfield",
                                                     "input": true,
-                                                    "key": "modelo",
+                                                    "key": "doc_Retoma_modelo",
                                                     "defaultValue": "",
                                                     "validate": {
                                                         "customMessage": "",
@@ -1714,7 +1800,7 @@ const detalleLLamada={
                                                     "alwaysEnabled": false,
                                                     "type": "textfield",
                                                     "input": true,
-                                                    "key": "ano",
+                                                    "key": "doc_Retoma_anio",
                                                     "defaultValue": "",
                                                     "validate": {
                                                         "customMessage": "",
@@ -1853,7 +1939,7 @@ const detalleLLamada={
                                                     "alwaysEnabled": false,
                                                     "type": "textfield",
                                                     "input": true,
-                                                    "key": "marca",
+                                                    "key": "doc_Retoma_marca",
                                                     "defaultValue": "",
                                                     "validate": {
                                                         "customMessage": "",
@@ -1927,7 +2013,7 @@ const detalleLLamada={
                                                     "alwaysEnabled": false,
                                                     "type": "textfield",
                                                     "input": true,
-                                                    "key": "precioEstimado",
+                                                    "key": "doc_Retoma_valor",
                                                     "defaultValue": "",
                                                     "validate": {
                                                         "customMessage": "",
@@ -2169,7 +2255,7 @@ const detalleLLamada={
                                                     "alwaysEnabled": false,
                                                     "type": "textfield",
                                                     "input": true,
-                                                    "key": "tipo",
+                                                    "key": "doc_Credito_Tipo",
                                                     "defaultValue": "",
                                                     "validate": {
                                                         "customMessage": "",
@@ -2243,7 +2329,7 @@ const detalleLLamada={
                                                     "alwaysEnabled": false,
                                                     "type": "textfield",
                                                     "input": true,
-                                                    "key": "totalAFinanciar",
+                                                    "key": "doc_Credito_CostoTotal_$",
                                                     "defaultValue": "",
                                                     "validate": {
                                                         "customMessage": "",
@@ -2317,7 +2403,7 @@ const detalleLLamada={
                                                     "alwaysEnabled": false,
                                                     "type": "textfield",
                                                     "input": true,
-                                                    "key": "saldoCredito",
+                                                    "key": "doc_Credito_Saldo",
                                                     "defaultValue": "",
                                                     "validate": {
                                                         "customMessage": "",
@@ -2446,7 +2532,7 @@ const detalleLLamada={
                                                     "alwaysEnabled": false,
                                                     "type": "textfield",
                                                     "input": true,
-                                                    "key": "montoPie",
+                                                    "key": "doc_Credito_Pie",
                                                     "defaultValue": "",
                                                     "validate": {
                                                         "customMessage": "",
@@ -3049,7 +3135,7 @@ const detalleLLamada={
                                                     "alwaysEnabled": false,
                                                     "type": "textfield",
                                                     "input": true,
-                                                    "key": "deducible2",
+                                                    "key": "doc_Seguro_Deducible",
                                                     "defaultValue": "",
                                                     "validate": {
                                                         "customMessage": "",
@@ -3178,7 +3264,7 @@ const detalleLLamada={
                                                     "alwaysEnabled": false,
                                                     "type": "textfield",
                                                     "input": true,
-                                                    "key": "primaAnual2",
+                                                    "key": "doc_Seguro_PrimaAnio_UF",
                                                     "defaultValue": "",
                                                     "validate": {
                                                         "customMessage": "",
@@ -3317,7 +3403,7 @@ const detalleLLamada={
                                                     "alwaysEnabled": false,
                                                     "type": "textfield",
                                                     "input": true,
-                                                    "key": "primaMensual",
+                                                    "key": "doc_Seguro_PrimaMes",
                                                     "defaultValue": "",
                                                     "validate": {
                                                         "customMessage": "",
@@ -3595,7 +3681,7 @@ const detalleLLamada={
                                                     "type": "textfield",
                                                     "input": true,
                                                     "key": "ventaRegistrada",
-                                                    "defaultValue": "Si",
+                                                    "defaultValue": "",
                                                     "validate": {
                                                         "customMessage": "",
                                                         "json": ""
@@ -3669,7 +3755,7 @@ const detalleLLamada={
                                                     "type": "textfield",
                                                     "input": true,
                                                     "key": "fecha",
-                                                    "defaultValue": "15/07/2019",
+                                                    "defaultValue": "",
                                                     "validate": {
                                                         "customMessage": "",
                                                         "json": ""
