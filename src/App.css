@@ -21,7 +21,7 @@ body{
 }
 
 #navegacion .navbar-brand{
-      background: url(http://54.245.143.70/openpartner/img/logo.png) no-repeat;
+      background: url(./components/img/logo.png) no-repeat;
       background-size: 90%;
       background-position: right;
       width: 150px;
