@@ -102,7 +102,7 @@ class Login extends Component {
                     <div className="ir_login">Ir al inicio</div>
                   </span>
                 </form>
-                <div className="sombra"><img src="https://cabify.openpartner.cl/openpartner/img/OP.png" width="100" /></div>
+                <div className="sombra"></div>
                </div>
             </div> ); 
     }else if(this.props.tipoLogin=="face"){

@@ -17,8 +17,9 @@ class AreaEdicion extends Component {
        ficha_C_T_id:"",
        ficha_nro_gestion:"",
        ficha_estado:"",
+       ficha_canal:"",
        expandida: false,
-       formulario:"detalleLLamada",
+       formulario:"",
        detalleLLamada:""
 
      }
@@ -44,56 +45,11 @@ class AreaEdicion extends Component {
         }else if(nuevoFormulario.formulario[0].ficha.estado_proceso=="agendado"){
             this.setState({ficha_estado:"agendado"});
         }
+
        
-
-      
-      this.setState({formulario:""});
-      this.setState({formulario:"detalleLLamada"});
-      
-      const f=nuevoFormulario.formulario[0].datosFormulario
-      const newForm=detalleLLamada 
-      //PESTAÑA INFO CLIENTE = detalleLLamada.components[0].components[0]
-      newForm.components[0].components[0].components[0].columns[0].components[0].defaultValue=f.doc_nu_documento
-      newForm.components[0].components[0].components[0].columns[0].components[1].defaultValue=f.doc_nombre
-      newForm.components[0].components[0].components[0].columns[0].components[2].defaultValue=f.Ap_paterno
-      newForm.components[0].components[0].components[0].columns[0].components[3].defaultValue=f.doc_nu_telefono
-
-      newForm.components[0].components[0].components[0].columns[1].components[0].defaultValue=f.doc_nucotizacion
-      newForm.components[0].components[0].components[0].columns[1].components[1].defaultValue=f.doc_version
-      newForm.components[0].components[0].components[0].columns[1].components[2].defaultValue=f.doc_lugaratencion
-
-      newForm.components[0].components[0].components[1].columns[0].components[0].defaultValue=f.doc_no_correo
-      newForm.components[0].components[0].components[1].columns[1].components[0].defaultValue=f.doc_Comuna
-      newForm.components[0].components[0].components[1].columns[2].components[0].defaultValue=f.doc_no_direccion
-      //PESTAÑA INFORMACION COMPLEMENTARIA = newForm.components[0].components[1] 
-      //VEHICULO EN PARTE DE PAGO
-      newForm.components[0].components[1].components[0].components[0].columns[0].components[0].defaultValue=f.doc_Retoma_no_patente
-      newForm.components[0].components[1].components[0].components[0].columns[0].components[1].defaultValue=f.doc_Retoma_no_version
-      newForm.components[0].components[1].components[0].components[0].columns[1].components[0].defaultValue=f.doc_Retoma_no_modelo
-      newForm.components[0].components[1].components[0].components[0].columns[1].components[1].defaultValue=f.doc_Retoma_nu_anio
-      newForm.components[0].components[1].components[0].components[0].columns[2].components[0].defaultValue=f.doc_Retoma_no_marca
-      newForm.components[0].components[1].components[0].components[0].columns[2].components[1].defaultValue=f.doc_Retoma_ValorRetoma
-      //CREDITO
-      newForm.components[0].components[1].components[1].components[0].columns[0].components[0].defaultValue=f.doc_Credito_Tipo
-      newForm.components[0].components[1].components[1].components[0].columns[0].components[1].defaultValue=f.doc_Credito_TotalaFinanciar
-      newForm.components[0].components[1].components[1].components[0].columns[0].components[2].defaultValue=f.doc_Credito_Saldo
-      newForm.components[0].components[1].components[1].components[0].columns[1].components[0].defaultValue=f.doc_Credito_MontoPie
-      newForm.components[0].components[1].components[1].components[0].columns[1].components[1].defaultValue=f.doc_Credito_ValorCuota
-      newForm.components[0].components[1].components[1].components[0].columns[1].components[2].defaultValue=f.doc_Credito_CAE
-      newForm.components[0].components[1].components[1].components[0].columns[2].components[0].defaultValue=f.doc_Credito_Cuotas
-      newForm.components[0].components[1].components[1].components[0].columns[2].components[1].defaultValue=f.doc_Credito_CostoTotal
-      //SEURO
-      newForm.components[0].components[1].components[2].components[0].columns[0].components[0].defaultValue=f.doc_Seguro_Deducible
-      newForm.components[0].components[1].components[2].components[0].columns[1].components[0].defaultValue=f.doc_Seguro_PrimaAnual
-      newForm.components[0].components[1].components[2].components[0].columns[2].components[0].defaultValue=f.doc_Seguro_PrimaMensual
-      //PESTAÑA HISTORICO = detalleLLamada.components[0].components[2] 
-      //VEHICULO EN PARTE DE PAGO
-      /*detalleLLamada.components[0].components[2].components[0].components[0].columns[0].components[0].defaultValue=f.nucotizacion
-      detalleLLamada.components[0].components[2].components[0].components[0].columns[0].components[1].defaultValue=f.Retoma_no_version
-      detalleLLamada.components[0].components[2].components[0].components[0].columns[1].components[0].defaultValue=f.Retoma_no_modelo
-      detalleLLamada.components[0].components[2].components[0].components[0].columns[1].components[1].defaultValue=f.Retoma_nu_anio
-      detalleLLamada.components[0].components[2].components[0].components[0].columns[2].components[0].defaultValue=f.Retoma_no_marca
-      detalleLLamada.components[0].components[2].components[0].components[0].columns[2].components[1].defaultValue=f.Retoma_ValorRetoma*/
+      //ACTUALIZO CANAL
+      this.setState({ficha_canal:nuevoFormulario.formulario[0].ficha.canal});
+      //EXTRAIGO LOS EJECUTIVOS
       const ejecutivos = [];
       const los_ejecitivos=this.props.ejecutivos
       //console.log(los_ejecitivos)
@@ -105,12 +61,75 @@ class AreaEdicion extends Component {
         })  
 
       }); 
+      //DETERMINO LA CONSTANTE FORMULARIO
+      const f=nuevoFormulario.formulario[0].datosFormulario
+     // this.setState({formulario:""});
+     // this.setState({formulario:"detalleLLamada"});
+      console.log(nuevoFormulario.formulario[0].ficha.canal)
+      if(nuevoFormulario.formulario[0].ficha.canal=="web") {
+        
+        this.state.formulario="detalleLLamada";
+        const newForm=detalleLLamada 
+        //PESTAÑA INFO CLIENTE = detalleLLamada.components[0].components[0]
+        newForm.components[0].components[0].components[0].columns[0].components[0].defaultValue=f.doc_nu_documento
+        newForm.components[0].components[0].components[0].columns[0].components[1].defaultValue=f.doc_nombre
+        newForm.components[0].components[0].components[0].columns[0].components[2].defaultValue=f.doc_Ap_paterno
+        newForm.components[0].components[0].components[0].columns[0].components[3].defaultValue=f.doc_nu_telefono
 
-      //RESULTADO DE LA LLAMADA
-      seguimiento.components[0].components[2].columns[0].components[0].data.values=ejecutivos
-      //console.log(seguimiento.components[0].components[2].columns[0].components[0].data.values)
+        newForm.components[0].components[0].components[0].columns[1].components[0].defaultValue=f.doc_nucotizacion
+        newForm.components[0].components[0].components[0].columns[1].components[1].defaultValue=f.doc_version
+        newForm.components[0].components[0].components[0].columns[1].components[2].defaultValue=f.doc_lugaratencion
+
+        newForm.components[0].components[0].components[1].columns[0].components[0].defaultValue=f.doc_no_correo
+        newForm.components[0].components[0].components[1].columns[1].components[0].defaultValue=f.doc_Comuna
+        newForm.components[0].components[0].components[1].columns[2].components[0].defaultValue=f.doc_no_direccion
+        //PESTAÑA INFORMACION COMPLEMENTARIA = newForm.components[0].components[1] 
+        //VEHICULO EN PARTE DE PAGO
+        newForm.components[0].components[1].components[0].components[0].columns[0].components[0].defaultValue=f.doc_Retoma_no_patente
+        newForm.components[0].components[1].components[0].components[0].columns[0].components[1].defaultValue=f.doc_Retoma_no_version
+        newForm.components[0].components[1].components[0].components[0].columns[1].components[0].defaultValue=f.doc_Retoma_no_modelo
+        newForm.components[0].components[1].components[0].components[0].columns[1].components[1].defaultValue=f.doc_Retoma_nu_anio
+        newForm.components[0].components[1].components[0].components[0].columns[2].components[0].defaultValue=f.doc_Retoma_no_marca
+        newForm.components[0].components[1].components[0].components[0].columns[2].components[1].defaultValue=f.doc_Retoma_ValorRetoma
+        //CREDITO
+        newForm.components[0].components[1].components[1].components[0].columns[0].components[0].defaultValue=f.doc_Credito_Tipo
+        newForm.components[0].components[1].components[1].components[0].columns[0].components[1].defaultValue=f.doc_Credito_TotalaFinanciar
+        newForm.components[0].components[1].components[1].components[0].columns[0].components[2].defaultValue=f.doc_Credito_Saldo
+        newForm.components[0].components[1].components[1].components[0].columns[1].components[0].defaultValue=f.doc_Credito_MontoPie
+        newForm.components[0].components[1].components[1].components[0].columns[1].components[1].defaultValue=f.doc_Credito_ValorCuota
+        newForm.components[0].components[1].components[1].components[0].columns[1].components[2].defaultValue=f.doc_Credito_CAE
+        newForm.components[0].components[1].components[1].components[0].columns[2].components[0].defaultValue=f.doc_Credito_Cuotas
+        newForm.components[0].components[1].components[1].components[0].columns[2].components[1].defaultValue=f.doc_Credito_CostoTotal
+        //SEURO
+        newForm.components[0].components[1].components[2].components[0].columns[0].components[0].defaultValue=f.doc_Seguro_Deducible
+        newForm.components[0].components[1].components[2].components[0].columns[1].components[0].defaultValue=f.doc_Seguro_PrimaAnual
+        newForm.components[0].components[1].components[2].components[0].columns[2].components[0].defaultValue=f.doc_Seguro_PrimaMensual
+        //PESTAÑA HISTORICO = detalleLLamada.components[0].components[2] 
+        //VEHICULO EN PARTE DE PAGO
+        /*detalleLLamada.components[0].components[2].components[0].components[0].columns[0].components[0].defaultValue=f.nucotizacion
+        detalleLLamada.components[0].components[2].components[0].components[0].columns[0].components[1].defaultValue=f.Retoma_no_version
+        detalleLLamada.components[0].components[2].components[0].components[0].columns[1].components[0].defaultValue=f.Retoma_no_modelo
+        detalleLLamada.components[0].components[2].components[0].components[0].columns[1].components[1].defaultValue=f.Retoma_nu_anio
+        detalleLLamada.components[0].components[2].components[0].components[0].columns[2].components[0].defaultValue=f.Retoma_no_marca
+        detalleLLamada.components[0].components[2].components[0].components[0].columns[2].components[1].defaultValue=f.Retoma_ValorRetoma*/
+        
+
+        //RESULTADO DE LA LLAMADA
+        seguimiento.components[0].components[2].columns[0].components[0].data.values=ejecutivos
+        //console.log(seguimiento.components[0].components[2].columns[0].components[0].data.values)
+        
+        this.state.detalleLLamada=newForm
       
-      this.state.detalleLLamada=newForm
+      }else if(nuevoFormulario.formulario[0].ficha.canal=="telefonia"){
+        this.state.formulario="detalletelefonia";
+        const newForm=detalletelefonia 
+        //PESTAÑA INFO CLIENTE = detalleLLamada.components[0].components[0]
+        newForm.components[0].components[0].components[1].defaultValue=f.doc_nombre
+
+      }
+
+
+
       console.log(this.state)
       this.mostrarfomrulario()
       console.log(this.state)
@@ -148,7 +167,12 @@ class AreaEdicion extends Component {
 
         }
     }else if(text=="detalleLLamada"){
-        this.setState({formulario:"detalleLLamada"});
+        if(this.state.ficha_canal=="web") {
+            this.setState({formulario:"detalleLLamada"});
+        }else if(this.state.ficha_canal=="telefonia"){
+            this.setState({formulario:"detalletelefonia"});
+        }
+        
     }
   }
 
@@ -315,6 +339,8 @@ actualizarGestionData(event){
               <div id="contenedorFormularios"  className='row contenedorFormularios'>
                 
                 {this.state.formulario=="detalleLLamada" && <Form form={this.state.detalleLLamada} onChange={(schema) => this.actualizarGestionData(schema)} onSubmit={this.actualizar} />}
+                {this.state.formulario=="detalletelefonia" && <Form form={detalletelefonia} onChange={(schema) => this.actualizarGestionData(schema)}  />}
+                
                 {this.state.formulario=="seguimiento" && <Form form={seguimiento} onSubmit={this.enviargestion} />}
                 {this.state.formulario=="tipificacion" && <Form form={tipificacion} onSubmit={this.enviargestion} />}
 
@@ -341,6 +367,437 @@ actualizarGestionData(event){
   }
 }
 
+const detalletelefonia={
+    "display": "form",
+    "components": [
+        {
+            "label": "Tabs",
+            "components": [
+                {
+                    "label": "Datos Cliente",
+                    "key": "tab2",
+                    "components": [
+                        {
+                            "label": "Rut Cliente",
+                            "allowMultipleMasks": false,
+                            "showWordCount": false,
+                            "showCharCount": false,
+                            "tableView": true,
+                            "alwaysEnabled": false,
+                            "type": "textfield",
+                            "input": true,
+                            "key": "doc_nu_documento",
+                            "defaultValue": "",
+                            "validate": {
+                                "customMessage": "",
+                                "json": ""
+                            },
+                            "conditional": {
+                                "show": "",
+                                "when": "",
+                                "json": ""
+                            },
+                            "tab": 0,
+                            "widget": {
+                                "type": ""
+                            },
+                            "properties": {},
+                            "tags": [],
+                            "reorder": false,
+                            "inputFormat": "plain",
+                            "encrypted": false,
+                            "customConditional": "",
+                            "logic": [],
+                            "attributes": {}
+                        },
+                        {
+                            "label": "Nombre",
+                            "allowMultipleMasks": false,
+                            "showWordCount": false,
+                            "showCharCount": false,
+                            "tableView": true,
+                            "alwaysEnabled": false,
+                            "type": "textfield",
+                            "input": true,
+                            "key": "doc_nombre",
+                            "defaultValue": "",
+                            "validate": {
+                                "customMessage": "",
+                                "json": ""
+                            },
+                            "conditional": {
+                                "show": "",
+                                "when": "",
+                                "json": ""
+                            },
+                            "tab": 0,
+                            "inputFormat": "plain",
+                            "encrypted": false,
+                            "properties": {},
+                            "tags": [],
+                            "customConditional": "",
+                            "logic": [],
+                            "attributes": {},
+                            "widget": {
+                                "type": ""
+                            },
+                            "reorder": false
+                        },
+                        {
+                            "label": "Apellido",
+                            "allowMultipleMasks": false,
+                            "showWordCount": false,
+                            "showCharCount": false,
+                            "tableView": true,
+                            "alwaysEnabled": false,
+                            "type": "textfield",
+                            "input": true,
+                            "key": "doc_Ap_paterno",
+                            "defaultValue": "",
+                            "validate": {
+                                "customMessage": "",
+                                "json": ""
+                            },
+                            "conditional": {
+                                "show": "",
+                                "when": "",
+                                "json": ""
+                            },
+                            "tab": 0,
+                            "properties": {},
+                            "tags": [],
+                            "inputFormat": "plain",
+                            "encrypted": false,
+                            "customConditional": "",
+                            "logic": [],
+                            "attributes": {},
+                            "widget": {
+                                "type": ""
+                            },
+                            "reorder": false
+                        },
+                        {
+                            "label": "Columns",
+                            "columns": [
+                                {
+                                    "components": [
+                                        {
+                                            "label": "Patente Vehiculo",
+                                            "allowMultipleMasks": false,
+                                            "showWordCount": false,
+                                            "showCharCount": false,
+                                            "tableView": true,
+                                            "alwaysEnabled": false,
+                                            "type": "textfield",
+                                            "input": true,
+                                            "key": "doc_patente",
+                                            "defaultValue": "",
+                                            "validate": {
+                                                "customMessage": "",
+                                                "json": ""
+                                            },
+                                            "conditional": {
+                                                "show": "",
+                                                "when": "",
+                                                "json": ""
+                                            },
+                                            "properties": {},
+                                            "tags": [],
+                                            "inputFormat": "plain",
+                                            "encrypted": false,
+                                            "customConditional": "",
+                                            "logic": [],
+                                            "attributes": {},
+                                            "widget": {
+                                                "type": ""
+                                            },
+                                            "reorder": false
+                                        },
+                                        {
+                                            "label": "Código Producto",
+                                            "allowMultipleMasks": false,
+                                            "showWordCount": false,
+                                            "showCharCount": false,
+                                            "tableView": true,
+                                            "alwaysEnabled": false,
+                                            "type": "textfield",
+                                            "input": true,
+                                            "key": "doc_codigoProducto",
+                                            "defaultValue": "",
+                                            "validate": {
+                                                "customMessage": "",
+                                                "json": ""
+                                            },
+                                            "conditional": {
+                                                "show": "",
+                                                "when": "",
+                                                "json": ""
+                                            },
+                                            "widget": {
+                                                "type": ""
+                                            },
+                                            "inputFormat": "plain",
+                                            "encrypted": false,
+                                            "properties": {},
+                                            "tags": [],
+                                            "reorder": false,
+                                            "customConditional": "",
+                                            "logic": [],
+                                            "attributes": {}
+                                        }
+                                    ],
+                                    "width": 6,
+                                    "offset": 0,
+                                    "push": 0,
+                                    "pull": 0,
+                                    "type": "column",
+                                    "input": false,
+                                    "hideOnChildrenHidden": false,
+                                    "key": "column",
+                                    "tableView": true,
+                                    "label": "Column"
+                                },
+                                {
+                                    "components": [
+                                        {
+                                            "label": "Número VIN",
+                                            "allowMultipleMasks": false,
+                                            "showWordCount": false,
+                                            "showCharCount": false,
+                                            "tableView": true,
+                                            "alwaysEnabled": false,
+                                            "type": "textfield",
+                                            "input": true,
+                                            "key": "doc_vin",
+                                            "defaultValue": "",
+                                            "validate": {
+                                                "customMessage": "",
+                                                "json": ""
+                                            },
+                                            "conditional": {
+                                                "show": "",
+                                                "when": "",
+                                                "json": ""
+                                            },
+                                            "inputFormat": "plain",
+                                            "encrypted": false,
+                                            "properties": {},
+                                            "customConditional": "",
+                                            "logic": [],
+                                            "attributes": {},
+                                            "widget": {
+                                                "type": ""
+                                            },
+                                            "tags": [],
+                                            "reorder": false
+                                        },
+                                        {
+                                            "label": "Producto",
+                                            "allowMultipleMasks": false,
+                                            "showWordCount": false,
+                                            "showCharCount": false,
+                                            "tableView": true,
+                                            "alwaysEnabled": false,
+                                            "type": "textfield",
+                                            "input": true,
+                                            "key": "doc_producto",
+                                            "defaultValue": "",
+                                            "validate": {
+                                                "customMessage": "",
+                                                "json": ""
+                                            },
+                                            "conditional": {
+                                                "show": "",
+                                                "when": "",
+                                                "json": ""
+                                            },
+                                            "widget": {
+                                                "type": ""
+                                            },
+                                            "properties": {},
+                                            "tags": [],
+                                            "reorder": false,
+                                            "inputFormat": "plain",
+                                            "encrypted": false,
+                                            "customConditional": "",
+                                            "logic": [],
+                                            "attributes": {}
+                                        }
+                                    ],
+                                    "width": 6,
+                                    "offset": 0,
+                                    "push": 0,
+                                    "pull": 0,
+                                    "type": "column",
+                                    "input": false,
+                                    "hideOnChildrenHidden": false,
+                                    "key": "column",
+                                    "tableView": true,
+                                    "label": "Column"
+                                }
+                            ],
+                            "mask": false,
+                            "tableView": false,
+                            "alwaysEnabled": false,
+                            "type": "columns",
+                            "input": false,
+                            "key": "columns2",
+                            "conditional": {
+                                "show": "",
+                                "when": "",
+                                "json": ""
+                            },
+                            "tab": 0,
+                            "reorder": false,
+                            "properties": {},
+                            "customConditional": "",
+                            "logic": [],
+                            "attributes": {}
+                        }
+                    ]
+                },
+                {
+                    "label": "Buscador",
+                    "key": "buscador",
+                    "components": [
+                        {
+                            "label": "Ingrese dato",
+                            "allowMultipleMasks": false,
+                            "showWordCount": false,
+                            "showCharCount": false,
+                            "tableView": true,
+                            "alwaysEnabled": false,
+                            "type": "textfield",
+                            "input": true,
+                            "key": "ingreseDato",
+                            "defaultValue": "n° VIN o Patente Vehiculo",
+                            "validate": {
+                                "customMessage": "",
+                                "json": "",
+                                "required": false,
+                                "custom": "",
+                                "customPrivate": false,
+                                "minLength": "",
+                                "maxLength": "",
+                                "minWords": "",
+                                "maxWords": "",
+                                "pattern": ""
+                            },
+                            "conditional": {
+                                "show": "",
+                                "when": "",
+                                "json": "",
+                                "eq": ""
+                            },
+                            "tab": 1,
+                            "widget": {
+                                "type": "",
+                                "format": "yyyy-MM-dd hh:mm a",
+                                "dateFormat": "yyyy-MM-dd hh:mm a",
+                                "saveAs": "text"
+                            },
+                            "inputFormat": "plain",
+                            "encrypted": false,
+                            "reorder": false,
+                            "properties": {},
+                            "customConditional": "",
+                            "logic": [],
+                            "attributes": {},
+                            "placeholder": "",
+                            "prefix": "",
+                            "customClass": "",
+                            "suffix": "",
+                            "multiple": false,
+                            "protected": false,
+                            "unique": false,
+                            "persistent": true,
+                            "hidden": false,
+                            "clearOnHide": true,
+                            "dataGridLabel": false,
+                            "labelPosition": "top",
+                            "labelWidth": 30,
+                            "labelMargin": 3,
+                            "description": "",
+                            "errorLabel": "",
+                            "tooltip": "",
+                            "hideLabel": false,
+                            "tabindex": "",
+                            "disabled": false,
+                            "autofocus": false,
+                            "dbIndex": false,
+                            "customDefaultValue": "",
+                            "calculateValue": "",
+                            "allowCalculateOverride": false,
+                            "refreshOn": "",
+                            "clearOnRefresh": false,
+                            "validateOn": "change",
+                            "mask": false,
+                            "inputType": "text",
+                            "inputMask": "",
+                            "id": "ec4r6x"
+                        }
+                    ]
+                }
+            ],
+            "mask": false,
+            "tableView": true,
+            "alwaysEnabled": false,
+            "type": "tabs",
+            "input": false,
+            "key": "tabs2",
+            "conditional": {
+                "show": "",
+                "when": "",
+                "json": ""
+            },
+            "reorder": false,
+            "properties": {},
+            "customConditional": "",
+            "logic": [],
+            "attributes": {}
+        }/*,
+        {
+            "label": "Enviar",
+            "state": "",
+            "theme": "primary",
+            "shortcut": "",
+            "disableOnInvalid": true,
+            "mask": false,
+            "tableView": true,
+            "alwaysEnabled": false,
+            "type": "button",
+            "key": "submit",
+            "input": true,
+            "defaultValue": false,
+            "validate": {
+                "customMessage": "",
+                "json": ""
+            },
+            "conditional": {
+                "show": "",
+                "when": "",
+                "json": ""
+            },
+            "encrypted": false,
+            "properties": {},
+            "showValidations": false,
+            "event": "",
+            "url": "",
+            "custom": "",
+            "reorder": false,
+            "customConditional": "",
+            "logic": [],
+            "attributes": {}
+        }*/
+    ],
+    "settings": {
+        "pdf": {
+            "id": "1ec0f8ee-6685-5d98-a847-26f67b67d6f0",
+            "src": "https://files.form.io/pdf/5692b91fd1028f01000407e3/file/1ec0f8ee-6685-5d98-a847-26f67b67d6f0"
+        }
+    }
+}
+
 const detalleLLamada={
     "display": "form",
     "components": [
@@ -365,7 +822,7 @@ const detalleLLamada={
                                             "alwaysEnabled": false,
                                             "type": "textfield",
                                             "input": true,
-                                            "key": "rutCliente",
+                                            "key": "doc_Rut_Cliente",
                                             "defaultValue": "25034824k",
                                             "validate": {
                                                 "customMessage": "",
@@ -767,7 +1224,7 @@ const detalleLLamada={
                                             "tooltip": "",
                                             "hideLabel": false,
                                             "tabindex": "",
-                                            "disabled": false,
+                                            "disabled": true,
                                             "autofocus": false,
                                             "dbIndex": false,
                                             "customDefaultValue": "",
@@ -2680,7 +3137,7 @@ const detalleLLamada={
                                                     "alwaysEnabled": false,
                                                     "type": "textfield",
                                                     "input": true,
-                                                    "key": "cae",
+                                                    "key": "doc_Credito_cae",
                                                     "defaultValue": "",
                                                     "validate": {
                                                         "customMessage": "",
@@ -3650,7 +4107,7 @@ const detalleLLamada={
                                                     "alwaysEnabled": false,
                                                     "type": "textfield",
                                                     "input": true,
-                                                    "key": "nCotizacionWeb2",
+                                                    "key": "doc_Reg_CotizacionWeb",
                                                     "defaultValue": "",
                                                     "validate": {
                                                         "customMessage": "",
@@ -3680,7 +4137,7 @@ const detalleLLamada={
                                                     "alwaysEnabled": false,
                                                     "type": "textfield",
                                                     "input": true,
-                                                    "key": "ventaRegistrada",
+                                                    "key": "doc_Reg_ventaRegistrada",
                                                     "defaultValue": "",
                                                     "validate": {
                                                         "customMessage": "",
@@ -3724,7 +4181,7 @@ const detalleLLamada={
                                                     "alwaysEnabled": false,
                                                     "type": "textfield",
                                                     "input": true,
-                                                    "key": "version3",
+                                                    "key": "doc_Reg_version",
                                                     "defaultValue": "",
                                                     "validate": {
                                                         "customMessage": "",
@@ -3754,7 +4211,7 @@ const detalleLLamada={
                                                     "alwaysEnabled": false,
                                                     "type": "textfield",
                                                     "input": true,
-                                                    "key": "fecha",
+                                                    "key": "doc_Reg_fecha",
                                                     "defaultValue": "",
                                                     "validate": {
                                                         "customMessage": "",

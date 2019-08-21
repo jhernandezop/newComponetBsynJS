@@ -36,7 +36,7 @@ class Timelines extends Component {
     }
     
   }
-// ENVÍO MENSAJE AL SERVIDOR
+// ENVÃO MENSAJE AL SERVIDOR
   handleSubmit() {
     
     let uid = this.state.uniqueid //event.target.value
@@ -51,7 +51,7 @@ class Timelines extends Component {
                               { "ges_ts": { "order" : "desc"}
                     }
                     ],
-          "_source": ["caso_ts", "ges_ts", "ges_resultado", "comentario_sv"],
+          "_source": ["caso_ts", "ges_ts", "ges_resultado", "ges_comentario_sv"],
           "query": {
           "bool": {
             "should": [
@@ -81,7 +81,7 @@ class Timelines extends Component {
                 this.setState({timelinedata:hits});
               })
 
-      // acá guardo el estado
+      // acÃ¡ guardo el estado
      // this.setState({...this.state.uniqueid, uid})
       //console.log(this.state.uniqueid)
       
@@ -89,12 +89,18 @@ class Timelines extends Component {
 
   render() {
    
-    // acá actualizo el componente y recorro el estado com map
+    // acÃ¡ actualizo el componente y recorro el estado com map
 
 
     const timelinedata = this.state.timelinedata.map((timeline, index) => {
       console.log('todo: '+ JSON.stringify(timeline._source.ges_ts));
-      
+      let comentario;
+      if(timeline._source.ges_comentario_sv == "" || timeline._source.ges_comentario_sv == undefined ){
+        comentario=""
+      }
+      else{
+        comentario=timeline._source.ges_comentario_sv;
+      }
       if(!timeline._source.ges_ts){
         console.log("A "+index)
          // esta es la primera gestion
@@ -111,10 +117,10 @@ class Timelines extends Component {
 
           return <div className="registro"  key={timeline._id}>
                     <div className="fecha">{fecha}</div>
-                    <div className="marca"></div>
+                    <div className="marcano"></div>
                     <div className="actividad">
                         <div className="tag">Inicio</div>
-                        <div className="comentario">aksdjhfka shdfjasdh faksjdhka sd askdhskdjhfakjshd faksdj hfasd kfak sdkjasd</div>
+                        
                     </div>
                   </div>
        
@@ -137,7 +143,10 @@ class Timelines extends Component {
                     <div className="actividad">
                         
                         <div className="tag">{timeline._source.ges_resultado.replace("_"," ")}</div>
-                        <div className="comentario"> aksdjhfkaj shdfjasdh faksjdhka sd askdhskdjhfakjshd faksdj hfasd kfak sdkjasd</div>
+                        
+                    </div>
+                    <div className="newcoment">
+                        <div className=""> {comentario}</div>
                     </div>
 
                    
@@ -148,7 +157,7 @@ class Timelines extends Component {
       
     });
     
-    // el return devuelve el conenido
+    // el return devuelve el conenido <div className="comentario"> {comentario}</div>
 
     if(this.state.timelinedata.length>0){
       return(
@@ -168,7 +177,6 @@ class Timelines extends Component {
 }
 
 export default Timelines;
-
 
 
 

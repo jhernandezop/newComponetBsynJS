@@ -88,14 +88,27 @@
 
 /*LINEA MANUAL*/
 
-.lineamanual{padding: 10px;font-size: 12px;}
+.lineamanual{
+    width: 100%;
+    padding: 10px;
+    font-size: 12px;
+}
 
 .registro{
-    margin-bottom: 40px;}
+    margin-bottom: 6px;}
 .registro > div{display: inline-flex;}
 .fecha{width: 62px;}
 
 .fecha div{display: block;}
+
+.marcano{
+    background: #1d906c;
+    width: 10px;
+    height: 10px;
+    border-radius: 100%;
+    margin-left: 10px;
+    margin-right: 10px;
+}
 
 .marca{
     background: #1d906c;
@@ -123,6 +136,7 @@
 
 }
 .comentario{
+   
     position: absolute;
     background: #CCC;
     margin-top: 20px;
@@ -135,16 +149,77 @@
     -webkit-box-shadow: inset 0px 0px 5px 0px rgba(115,115,115,1);
     -moz-box-shadow: inset 0px 0px 5px 0px rgba(115,115,115,1);
     box-shadow: inset 0px 0px 5px 0px rgba(115,115,115,1);
-
+ display: none;
 }
 
 .comentario:hover{
+    
     cursor: pointer;
     height: auto;
     z-index: 9000;
     position: absolute;
     left: 0;
+    right: 0;
     margin-left: 8px;
     font-size: 14px;
+    display: none;
 
+}
+.newcoment{
+
+    background: #CCC;
+
+    height: 26px;
+    padding: 4px;
+    overflow: hidden;
+    margin-right: 9px;
+    border-radius: 3px;
+    position: relative;
+    margin-left: 91px;
+        margin-top: 6px;
+    -webkit-box-shadow: inset 0px 0px 5px 0px rgba(115,115,115,1);
+    -moz-box-shadow: inset 0px 0px 5px 0px rgba(115,115,115,1);
+    box-shadow: inset 0px 0px 5px 0px rgba(115,115,115,1);
+
+}
+
+.newcoment::after {
+  content: "...";
+}
+.marca:before {
+    content: "\A";
+    width: 0;
+    height: 0;
+    border-right: 10px solid transparent;
+    border-top: 16px solid transparent;
+    border-left: 10px solid transparent;
+    border-bottom: 8px solid #cac9c9;
+    position: absolute;
+    margin-left: 27px;
+    margin-top: -3px;
+    z-index: 5;
+}
+
+.newcoment:hover{
+    opacity: 1;
+    cursor: pointer;
+    z-index: 9000;
+    -webkit-animation-name: example; /* Safari 4.0 - 8.0 */
+    -webkit-animation-duration: 1s; /* Safari 4.0 - 8.0 */
+    -webkit-animation-fill-mode: forwards; /* Safari 4.0 - 8.0 */
+    animation-name: example;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+}
+
+.newcoment:hover::after{
+    content: "";
+}
+
+
+
+/* Standard syntax */
+@keyframes example {
+  from {height: 26px;  margin-left: 27px;}
+  to {height:auto;  margin-left: 0px;}
 }
