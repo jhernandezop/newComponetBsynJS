@@ -20,7 +20,8 @@ class AreaEdicion extends Component {
        ficha_canal:"",
        expandida: false,
        formulario:"",
-       detalleLLamada:""
+       detalleLLamada:"",
+       data_editada:false
 
      }
 
@@ -236,6 +237,7 @@ class AreaEdicion extends Component {
     this.props.formulario[0].datosFormulario["comentario_sv"]=event.data.comentarios
     this.props.formulario[0].datosFormulario["resultado_llamada"]=event.data.select
 
+    
     const transaccion={
                         "tx":"gesSV",
                         "ts_o":moment().format('YYYY-MM-DDTHH:mm:ss'),
@@ -258,11 +260,19 @@ class AreaEdicion extends Component {
                         "gestion":{},
                         "gestion_data":this.props.formulario[0].datosFormulario
                         }
+    
+    if(this.state.data_editada==true && this.state.ficha_estado=="nuevo"){
+        transaccion.gestion["gestion"]="gestion"
+    }else if(this.state.data_editada==true && this.state.ficha_estado=="en gestion"){
+        transaccion.gestion["gestion"]="actualizacion"
+    }else if(this.state.data_editada==true && this.state.ficha_estado=="agendada"){
+        transaccion.gestion["gestion"]="actualizacion"
+    }
 
                     console.log(transaccion)
 
           var url = 'https://bscore.openpartner.cl/gdm';
-         
+         return false;
             fetch(url, {
               method: 'POST', 
               body: JSON.stringify(transaccion), 
@@ -315,7 +325,7 @@ actualizarGestionData(event){
         this.props.formulario[0].datosFormulario[i]=campos_nuevos[i]
 
   }
-
+  this.setState({data_editada:true});
   console.log(event.data)
   console.log(this.props.formulario[0].datosFormulario)
 }
